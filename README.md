@@ -1,39 +1,105 @@
-# WordPress
+# Local Development Setup
 
-This is a WordPress repository configured to run on the [Pantheon platform](https://pantheon.io).
+## Quick Start
 
-Pantheon is website platform optimized and configured to run high performance sites with an amazing developer workflow. There is built-in support for features such as Varnish, Redis, Apache Solr, New Relic, Nginx, PHP-FPM, MySQL, PhantomJS and more. 
+1. **Install Lando** from https://lando.dev (if you haven't already)
 
-## Getting Started
+2. **Start the environment:**
+   ```bash
+   lando start
+   ```
 
-### 1. Spin-up a site
+3. **Install WordPress:**
+   ```bash
+   lando install
+   ```
 
-If you do not yet have a Pantheon account, you can create one for free. Once you've verified your email address, you will be able to add sites from your dashboard. Choose "WordPress" to use this distribution.
+4. **Set up the Camelcase Theme for development:**
+   ```bash
+   cd wp-content/themes/camelcase-theme
+   npm install
+   npm run dev
+   ```
 
-### 2. Load up the site
+That's it! Your site is now running at: **https://camelcase.lndo.site:4433**
 
-When the spin-up process is complete, you will be redirected to the site's dashboard. Click on the link under the site's name to access the Dev environment.
+- **Username:** admin
+- **Password:** admin
+- **Theme:** Camelcase Theme (with HMR enabled)
 
-![alt](http://i.imgur.com/2wjCj9j.png?1, '')
+## What's Included
 
-### 3. Run the WordPress installer
+- PHP 8.2
+- MariaDB 10.11
+- WordPress latest
+- WP-CLI pre-installed
+- **Camelcase Theme** with modern development stack:
+  - Vite for fast builds and HMR
+  - Tailwind CSS 3.x with Epilogue font
+  - Alpine.js for JavaScript interactions
+  - PostCSS for CSS processing
 
-How about the WordPress database config screen? No need to worry about database connection information as that is taken care of in the background. The only step that you need to complete is the site information and the installation process will be complete.
+## Theme Development
 
-We will post more information about how this works but we recommend developers take a look at `wp-config.php` to get an understanding.
+### Hot Module Replacement (HMR)
+When `npm run dev` is running, the theme automatically enables HMR:
+- **CSS changes** update instantly without page refresh
+- **JavaScript changes** hot-reload modules
+- **PHP file changes** trigger automatic browser refresh
 
-![alt](http://i.imgur.com/4EOcqYN.png, '')
+### Build Commands
+```bash
+cd wp-content/themes/camelcase-theme
 
-If you would like to keep a separate set of configuration for local development, you can use a file called `wp-config-local.php`, which is already in our .gitignore file.
+# Development with HMR
+npm run dev
 
-### 4. Enjoy!
+# Production build
+npm run build
+```
 
-![alt](http://i.imgur.com/fzIeQBP.png, '')
+## Helpful Commands
 
-## Branches
+- `lando wp` - Run any WP-CLI command
+- `lando mysql` - Access the database
+- `lando info` - Show connection details
+- `lando stop` - Stop the environment
+- `lando destroy` - Remove containers (start fresh)
 
-The `default` branch of this repository is where PRs are merged, and has [CI](https://github.com/pantheon-systems/WordPress/tree/default/.circleci) that copies `default` to `master` after removing the CI directories. This allows customers to clone from `master` and implement their own CI without needing to worry about potential merge conflicts.
+## Troubleshooting
 
-## Custom Upstreams
+### Theme Development Issues
 
-If you are using this repository as a starting point for a custom upstream, be sure to review the [documentation](https://pantheon.io/docs/create-custom-upstream#pull-in-core-from-pantheons-upstream) and pull the core files from the `master` branch.
+**CSS not loading or HMR not working:**
+1. Make sure `npm run dev` is running (Vite dev server on port 3000)
+2. Verify `IS_VITE_DEVELOPMENT` is set to `true` in wp-config-local.php
+3. Check that WordPress site URL matches: `https://camelcase.lndo.site:4433`
+
+**Build failures:**
+- Ensure all config files use ES module syntax (`export default`)
+- Check that `"type": "module"` is set in package.json
+
+### General Issues
+
+If you see SSL warnings in your browser, accept the certificate (it's a local cert).
+
+If port conflicts occur, Lando will automatically find available ports. Run `lando info` to see the actual URLs.
+
+**Common ports used:**
+- WordPress: `https://camelcase.lndo.site:4433`
+- Vite dev server: `http://localhost:3000`
+
+## Database Info (if needed)
+
+- Database: wordpress
+- User: wordpress
+- Password: wordpress
+- Host: database (internally) or localhost:PORT (check `lando info`)
+
+## Development Workflow
+
+1. **Start Lando:** `lando start`
+2. **Start theme development:** `cd wp-content/themes/camelcase-theme && npm run dev`
+3. **Make changes** to CSS, JS, or PHP files
+4. **See instant updates** in your browser
+5. **Build for production:** `npm run build` (when ready to deploy)
