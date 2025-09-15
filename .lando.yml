@@ -1,0 +1,43 @@
+name: camelcase
+recipe: wordpress
+config:
+  php: '8.2'
+  webroot: .
+  database: mariadb:10.11
+  xdebug: false
+
+services:
+  appserver:
+    build_as_root:
+      - apt-get update -y
+      - apt-get install -y nano vim
+  database:
+    type: mariadb:10.11
+    portforward: true
+    creds:
+      user: wordpress
+      password: wordpress
+      database: wordpress
+
+tooling:
+  wp:
+    service: appserver
+    description: Run WP-CLI commands
+    cmd: wp --path=/app
+
+  install:
+    service: appserver
+    description: Install WordPress with default settings
+    cmd: |
+      wp core install \
+        --url=https://camelcase.lndo.site \
+        --title="Camelcase Assessments" \
+        --admin_user=admin \
+        --admin_password=admin \
+        --admin_email=admin@example.com \
+        --path=/app && \
+      echo "WordPress installed! Username: admin, Password: admin"
+
+proxy:
+  appserver:
+    - camelcase.lndo.site

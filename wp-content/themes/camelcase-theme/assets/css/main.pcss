@@ -1,0 +1,193 @@
+/* Google Fonts */
+@import '@fontsource/epilogue/400.css';
+@import '@fontsource/epilogue/500.css';
+@import '@fontsource/epilogue/600.css';
+@import '@fontsource/epilogue/700.css';
+
+/* Tailwind CSS imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer base {
+  body {
+    @apply text-gray-900 antialiased font-epilogue;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-white overflow-hidden shadow rounded-lg;
+  }
+
+  .card-body {
+    @apply px-4 py-5 sm:p-6;
+  }
+}
+
+/* Header styles */
+.site-header {
+  @apply bg-white shadow-sm border-b border-gray-200;
+
+  .site-branding {
+    @apply py-4;
+  }
+
+  .site-title {
+    @apply text-2xl font-bold text-gray-900;
+
+    a {
+      @apply text-gray-900 hover:text-primary-600 no-underline;
+    }
+  }
+
+  .site-description {
+    @apply text-sm text-gray-600 mt-1;
+  }
+}
+
+/* Navigation styles */
+.main-navigation {
+  @apply py-4;
+
+  ul {
+    @apply flex flex-wrap gap-6 list-none m-0 p-0;
+  }
+
+  a {
+    @apply text-gray-700 hover:text-primary-600 no-underline font-medium;
+  }
+
+  .current-menu-item a {
+    @apply text-primary-600;
+  }
+}
+
+/* Content styles */
+.site-content {
+  @apply py-12;
+}
+
+.entry-header {
+  @apply mb-8;
+}
+
+.entry-title {
+  @apply text-4xl font-bold text-gray-900 mb-4;
+
+  a {
+    @apply text-gray-900 hover:text-primary-600 no-underline;
+  }
+}
+
+.entry-meta {
+  @apply text-sm text-gray-600 space-x-4;
+}
+
+.entry-content {
+  @apply prose prose-lg max-w-none;
+
+  p {
+    @apply mb-6;
+  }
+
+  h2 {
+    @apply text-3xl mt-8 mb-4;
+  }
+
+  h3 {
+    @apply text-2xl mt-6 mb-3;
+  }
+
+  ul, ol {
+    @apply my-6;
+  }
+
+  blockquote {
+    @apply border-l-4 border-primary-500 pl-4 italic my-6;
+  }
+
+  img {
+    @apply rounded-lg shadow-md;
+  }
+}
+
+/* Footer styles */
+.site-footer {
+  @apply bg-gray-50 border-t border-gray-200 mt-12;
+
+  .footer-widgets {
+    @apply py-12 grid grid-cols-1 md:grid-cols-3 gap-8;
+  }
+
+  .site-info {
+    @apply py-6 text-center text-sm text-gray-600 border-t border-gray-200;
+
+    a {
+      @apply text-primary-600 hover:text-primary-700;
+    }
+  }
+}
+
+/* WordPress specific classes */
+.screen-reader-text {
+  @apply sr-only;
+}
+
+.alignleft {
+  @apply float-left mr-4;
+}
+
+.alignright {
+  @apply float-right ml-4;
+}
+
+.aligncenter {
+  @apply mx-auto block;
+}
+
+.wp-caption {
+  @apply max-w-full;
+
+  img {
+    @apply block;
+  }
+
+  .wp-caption-text {
+    @apply text-sm text-gray-600 mt-2 text-center;
+  }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .main-navigation {
+    ul {
+      @apply flex-col gap-2;
+    }
+  }
+
+  .entry-title {
+    @apply text-3xl;
+  }
+}

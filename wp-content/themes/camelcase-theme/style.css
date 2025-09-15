@@ -1,0 +1,18 @@
+/*
+Theme Name: Camelcase Theme
+Theme URI: https://camelcase.lndo.site
+Author: Camelcase Development Team
+Author URI: https://camelcase.lndo.site
+Description: A modern WordPress theme built with Vite, Tailwind CSS, and hot module replacement for rapid development
+Version: 1.0.0
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: camelcase-theme
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, responsive-layout, accessibility-ready
+*/
+
+/*
+This theme uses Tailwind CSS for styling.
+Styles are compiled from assets/css/main.scss via Vite.
+This file only contains the WordPress theme header required by WordPress.
+*/
