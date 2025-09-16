@@ -1,6 +1,6 @@
 {
     "key": "group_68c994426bf8a",
-    "title": "Homepage",
+    "title": "Homepage Banner",
     "fields": [
         {
             "key": "field_68c99445d16bc",
@@ -85,5 +85,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1758042564
+    "modified": 1758063263
 }
