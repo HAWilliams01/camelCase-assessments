@@ -11,6 +11,15 @@ get_header(); ?>
     <!-- Hero Section -->
     <?php get_template_part( 'template-parts/homepage-banner' ); ?>
     
+    <!-- Page Content from Editor -->
+    <?php if ( have_posts() ) : ?>
+        <?php while ( have_posts() ) : the_post(); ?>
+            <section class="page-content">
+                <?php the_content(); ?>
+            </section>
+        <?php endwhile; ?>
+    <?php endif; ?>
+    
     <section class="hero bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div class="container mx-auto px-6 py-20 text-center">
             <h1 class="text-5xl md:text-6xl font-bold mb-6">
