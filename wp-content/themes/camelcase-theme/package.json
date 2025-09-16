@@ -26,6 +26,8 @@
     "vite-plugin-restart": "^1.0.0"
   },
   "dependencies": {
-    "@fontsource/epilogue": "^5.2.7"
+    "@fontsource/epilogue": "^5.2.7",
+    "@splidejs/splide": "^4.1.4",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3"
   }
 }
