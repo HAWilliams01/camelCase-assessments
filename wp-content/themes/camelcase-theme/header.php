@@ -14,13 +14,13 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> x-data="smoothScroll">
 <?php wp_body_open(); ?>
 
 <div id="page" class="site min-h-screen bg-gray-50">
     <a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'camelcase-theme' ); ?></a>
 
-    <header id="masthead" class="site-header bg-white shadow-sm sticky top-0 z-50">
+    <header id="masthead" class="site-header bg-white shadow-sm sticky top-0 z-50" x-data="mobileMenu">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="site-branding">
@@ -57,7 +57,7 @@
                 </nav>
 
                 <!-- Mobile menu button -->
-                <button class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100" id="mobile-menu-button">
+                <button @click="toggle()" :aria-expanded="open" class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -65,7 +65,7 @@
             </div>
 
             <!-- Mobile menu -->
-            <nav id="mobile-navigation" class="md:hidden hidden mt-4 pb-4 border-t border-gray-200">
+            <nav x-show="open" x-transition class="md:hidden mt-4 pb-4 border-t border-gray-200">
                 <?php
                 wp_nav_menu( array(
                     'theme_location' => 'primary',

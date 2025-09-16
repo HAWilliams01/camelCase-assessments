@@ -103,3 +103,161 @@ If port conflicts occur, Lando will automatically find available ports. Run `lan
 3. **Make changes** to CSS, JS, or PHP files
 4. **See instant updates** in your browser
 5. **Build for production:** `npm run build` (when ready to deploy)
+
+## Adding Custom Blocks
+
+You have the flexibility to create blocks using ACF (Advanced Custom Fields), Gutenberg blocks, or any other method you prefer. The theme is set up to support multiple approaches.
+
+### Option 1: ACF Blocks (Recommended for Quick Development)
+
+The theme includes ACF integration with example code ready to uncomment.
+
+#### Prerequisites
+1. Install and activate the Advanced Custom Fields plugin
+2. For production environments, ACF admin is automatically disabled for security/performance (enabled on local)
+
+#### Steps to Add a New ACF Block
+
+1. **Register your block** in `wp-content/themes/camelcase-theme/inc/acf.php`:
+   - Uncomment the example block registration (lines 100-108)
+   - Modify the block settings:
+   ```php
+   acf_register_block_type( array(
+       'name'              => 'your-block-name',
+       'title'             => __( 'Your Block Title', 'camelcase-theme' ),
+       'description'       => __( 'Block description here', 'camelcase-theme' ),
+       'render_template'   => get_template_directory() . '/template-parts/blocks/your-block.php',
+       'category'          => 'formatting',
+       'icon'              => 'admin-comments',
+       'keywords'          => array( 'keyword1', 'keyword2' ),
+   ) );
+   ```
+
+2. **Create the block template** at `template-parts/blocks/your-block.php`:
+   ```php
+   <?php
+   /**
+    * Your Block Template
+    *
+    * @param array $block The block settings and attributes.
+    * @param string $content The block inner HTML (empty).
+    * @param bool $is_preview True during backend preview render.
+    * @param int $post_id The post ID the block is rendering content against.
+    * @param array $context The context provided to the block by the post or its parent block.
+    */
+
+   // Get ACF fields
+   $field_name = get_field('field_name') ?: 'Default value';
+   ?>
+
+   <div class="your-block-classes">
+       <!-- Your block HTML here -->
+   </div>
+   ```
+
+3. **Configure ACF fields**:
+   - Go to Custom Fields → Add New in WordPress admin
+   - Create your field group
+   - Set location rules to: Block → is equal to → Your Block Name
+   - Fields will auto-save to `source/acf-json/` (create this directory if needed)
+
+4. **Style your block** using Tailwind classes in the template
+
+## JavaScript & Alpine.js Integration
+
+### How Alpine.js is Included
+
+Alpine.js is already integrated into the theme and automatically initialized. It's imported in `assets/js/main.js` and starts on page load.
+
+#### Using Alpine.js in Your Blocks
+
+Add Alpine.js directives directly in your PHP templates:
+
+```html
+<!-- Example: Toggle functionality -->
+<div x-data="{ open: false }">
+    <button @click="open = !open">Toggle Content</button>
+    <div x-show="open" x-transition>
+        Your content here
+    </div>
+</div>
+
+<!-- Example: Dynamic form -->
+<div x-data="{ count: 0 }">
+    <button @click="count++">Add Item</button>
+    <span x-text="count"></span>
+</div>
+```
+
+### Adding Custom JavaScript
+
+The theme provides multiple ways to add custom JavaScript functionality:
+
+#### Option 1: Using the /parts Directory (Recommended for Organization)
+
+Create modular JavaScript files in `assets/js/parts/` for better code organization:
+
+1. Create your module in `assets/js/parts/`:
+   ```javascript
+   // assets/js/parts/custom-slider.js
+   export function initSlider() {
+       // Your slider logic here
+   }
+   ```
+
+2. Import and use in `main.js`:
+   ```javascript
+   import { initSlider } from './parts/custom-slider';
+
+   document.addEventListener('DOMContentLoaded', () => {
+       initSlider();
+   });
+   ```
+
+#### Option 2: Alpine.js Components
+
+Register custom Alpine components for reusable functionality:
+
+```javascript
+// assets/js/parts/alpine-components.js
+export function registerAlpineComponents() {
+    Alpine.data('dropdown', () => ({
+        open: false,
+        toggle() { this.open = !this.open },
+        close() { this.open = false }
+    }));
+}
+```
+
+Then use in your templates:
+```html
+<div x-data="dropdown">
+    <button @click="toggle()">Menu</button>
+    <div x-show="open" @click.away="close()">
+        <!-- Menu items -->
+    </div>
+</div>
+```
+
+#### Option 3: Vanilla JavaScript
+
+You can also use plain vanilla JavaScript anywhere in the theme:
+
+- Add to `main.js` for global functionality
+- Create separate files in `assets/js/parts/`
+- Or include directly in your block templates:
+  ```php
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Your vanilla JS code here
+  });
+  </script>
+  ```
+
+### JavaScript Best Practices
+
+- Use ES6 modules for better organization
+- Leverage Alpine.js for interactive UI components (already included)
+- Keep block-specific JS with the block when possible
+- Use the `/parts` directory for reusable functionality
+- All custom JS benefits from Vite's HMR during development
