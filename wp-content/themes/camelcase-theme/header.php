@@ -17,10 +17,10 @@
 <body <?php body_class(); ?> x-data="smoothScroll">
 <?php wp_body_open(); ?>
 
-<div id="page" class="site min-h-screen bg-gray-50">
+<div id="page" class="site min-h-screen">
     <a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'camelcase-theme' ); ?></a>
 
-    <header id="masthead" class="site-header bg-white shadow-sm sticky top-0 z-50" x-data="mobileMenu">
+    <header id="masthead" class="site-header bg-white" x-data="mobileMenu">
         <div class="container mx-auto ">
             <div class="flex items-center justify-between">
                 <div class="site-branding">
@@ -65,7 +65,7 @@
             </div>
 
             <!-- Mobile menu -->
-            <nav x-show="open" x-transition class="md:hidden mt-4 pb-4 border-t border-gray-200">
+            <nav x-show="open" x-transition class="md:hidden mt-4 pb-4">
                 <?php
                 wp_nav_menu( array(
                     'theme_location' => 'primary',
