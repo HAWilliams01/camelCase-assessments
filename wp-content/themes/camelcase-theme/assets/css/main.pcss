@@ -26,7 +26,7 @@
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto py-6 px-[2.625rem];
   }
 
   .btn {
@@ -51,7 +51,17 @@
   @apply bg-white shadow-sm border-b border-gray-200;
 
   .site-branding {
-    @apply py-4;
+    a {
+      @apply w-12 h-12 flex;
+
+      img {
+        @apply w-full h-full;
+      }
+    }
+  }
+
+  .site-branding {
+    
   }
 
   .site-title {

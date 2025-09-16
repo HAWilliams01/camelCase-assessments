@@ -21,7 +21,7 @@
     <a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'camelcase-theme' ); ?></a>
 
     <header id="masthead" class="site-header bg-white shadow-sm sticky top-0 z-50" x-data="mobileMenu">
-        <div class="container mx-auto px-6 py-4">
+        <div class="container mx-auto ">
             <div class="flex items-center justify-between">
                 <div class="site-branding">
                     <?php
