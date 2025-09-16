@@ -21,7 +21,7 @@ $images = get_field('slider_images');
         <div class="splide__list">
             <?php foreach ($images as $image): ?>
                 <div class="splide__slide">
-                    <div class="flex bg-white">
+                    <div class="flex bg-white max-w-32">
                         <img src="<?php echo esc_url($image['sizes']['medium']); ?>"
                             alt="<?php echo esc_attr($image['alt']); ?>"
                             loading="lazy">
