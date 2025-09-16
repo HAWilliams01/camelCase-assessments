@@ -95,6 +95,18 @@ function camelcase_acf_init_block_types() {
     if ( ! function_exists( 'acf_register_block_type' ) ) {
         return;
     }
+    
+    // Image Slider Block
+    acf_register_block_type(array(
+        'name'              => 'block_image_slider',
+        'title'             => __('Image Slider', 'camelcase-theme'),
+        'description'       => __('A custom block to show images in a slider.', 'camelcase-theme'),
+        'render_template'   => get_template_directory() . '/template-parts/blocks/image-slider.php',
+        'category'          => 'formatting',
+        'icon'              => 'format-gallery',
+        'keywords'          => array('image', 'slider'),
+    ));
+}
 
     // Example block registration
     // acf_register_block_type( array(
