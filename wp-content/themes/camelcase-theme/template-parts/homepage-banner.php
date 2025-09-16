@@ -12,7 +12,7 @@ $banner_cta = get_field('banner_cta');
 ?>
 
 <section class="homepage-banner container">
-    <div class="flex flex-col md:flex-row items-start md:items-center justify-center gap-16">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-center gap-[2.625rem] md:gap-[4.25rem]">
         <div>
             <?php if ($banner_text): ?>
                 <div class="flex flex-col gap-4"><?php echo $banner_text; ?></div>
