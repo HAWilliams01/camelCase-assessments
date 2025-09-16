@@ -8,8 +8,8 @@ logoSlider.forEach(function (element) {
         type: "loop",
         pagination: false,
         padding: "0",
-        perPage: 2,
-        gap: "3.5rem",
+        perPage: 3,
+        gap: "1.25rem",
         mediaQuery: "min",
         autoScroll: {
             speed: 1,
@@ -17,14 +17,12 @@ logoSlider.forEach(function (element) {
             pauseOnFocus: false,
         },
         breakpoints: {
-            500: {
-                perPage: 3,
-            },
             640: {
-                gap: "5rem",
+                gap: "3.5rem",
                 perPage: 4,
             },
             1280: {
+                gap: "5rem",
                 perPage: 5,
             },
         },
