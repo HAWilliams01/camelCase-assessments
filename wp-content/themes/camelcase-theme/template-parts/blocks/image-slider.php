@@ -15,8 +15,8 @@ $images = get_field('slider_images');
 ?>
 
 <div class="block-image-slider splide relative py-[7rem]">
-    <div class="absolute top-0 left-0 bg-gradient-to-r from-white from-60% to-transparent w-20 h-full z-10"></div>
-    <div class="absolute top-0 left-auto right-0 bg-gradient-to-l from-white from-60% to-transparent w-20 h-full z-10"></div>
+    <div class="absolute top-0 left-0 bg-gradient-to-r from-white from-60% to-transparent w-6 md:w-20 h-full z-10"></div>
+    <div class="absolute top-0 left-auto right-0 bg-gradient-to-l from-white from-60% to-transparent w-6 md:w-20 h-full z-10"></div>
     <div class="splide__track">
         <div class="splide__list">
             <?php foreach ($images as $image): ?>
