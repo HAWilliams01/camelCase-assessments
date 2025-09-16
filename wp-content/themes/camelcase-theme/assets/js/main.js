@@ -7,6 +7,7 @@ import '../css/main.pcss';
 
 import Alpine from 'alpinejs';
 import { registerComponents } from './parts/alpine-components';
+import './parts/splide.js';
 
 // Register custom Alpine components
 registerComponents(Alpine);

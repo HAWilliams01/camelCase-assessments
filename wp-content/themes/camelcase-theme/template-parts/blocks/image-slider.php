@@ -12,35 +12,22 @@
 
 // Get ACF fields
 $images = get_field('slider_images');
-
-// Create a unique ID for this block instance
-$block_id = 'image-slider-' . $block['id'];
 ?>
 
-<div id="<?php echo esc_attr($block_id); ?>" class="block-image-slider">
-    IMAGE SLIDER BLOCK
-    <?php if ($images): ?>
-        <div class="gallery-container">
+<div class="block-image-slider splide relative py-[7rem]">
+    <div class="absolute top-0 left-0 bg-gradient-to-r from-white from-60% to-transparent w-20 h-full z-10"></div>
+    <div class="absolute top-0 left-auto right-0 bg-gradient-to-l from-white from-60% to-transparent w-20 h-full z-10"></div>
+    <div class="splide__track">
+        <div class="splide__list">
             <?php foreach ($images as $image): ?>
-                <div class="gallery-item">
-                    <div class="gallery-image">
-                        <img src="<?php echo esc_url($image['sizes']['large']); ?>"
+                <div class="splide__slide">
+                    <div class="flex bg-white">
+                        <img src="<?php echo esc_url($image['sizes']['medium']); ?>"
                             alt="<?php echo esc_attr($image['alt']); ?>"
                             loading="lazy">
                     </div>
-                    <?php if ($show_captions && !empty($image['caption'])): ?>
-                        <div class="gallery-caption">
-                            <?php echo esc_html($image['caption']); ?>
-                        </div>
-                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>
-    <?php else: ?>
-        <?php if ($is_preview): ?>
-            <div class="gallery-placeholder">
-                <p>No images selected. Please add images to this gallery block.</p>
-            </div>
-        <?php endif; ?>
-    <?php endif; ?>
+    </div>
 </div>
