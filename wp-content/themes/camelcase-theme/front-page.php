@@ -9,6 +9,8 @@ get_header(); ?>
 
 <main id="main" class="site-main">
     <!-- Hero Section -->
+    <?php get_template_part( 'template-parts/homepage-banner' ); ?>
+    
     <section class="hero bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div class="container mx-auto px-6 py-20 text-center">
             <h1 class="text-5xl md:text-6xl font-bold mb-6">
