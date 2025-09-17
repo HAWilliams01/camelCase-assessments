@@ -22,60 +22,62 @@
 
     <header id="masthead" class="site-header bg-white" x-data="mobileMenu">
         <div class="container mx-auto py-6">
-            <div class="flex items-center justify-between">
-                <div class="site-branding">
-                    <?php
-                    if ( has_custom_logo() ) :
-                        the_custom_logo();
-                    else :
-                        ?>
-                        <h1 class="site-title text-2xl font-bold text-gray-900">
-                            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="hover:text-blue-600 transition-colors">
-                                <?php bloginfo( 'name' ); ?>
-                            </a>
-                        </h1>
+            <div class="px-[1.125rem]">
+                <div class="flex items-center justify-between">
+                    <div class="site-branding">
                         <?php
-                        $description = get_bloginfo( 'description', 'display' );
-                        if ( $description || is_customize_preview() ) :
+                        if ( has_custom_logo() ) :
+                            the_custom_logo();
+                        else :
                             ?>
-                            <p class="site-description text-sm text-gray-600 mt-1"><?php echo $description; ?></p>
-                        <?php endif;
-                    endif;
-                    ?>
+                            <h1 class="site-title text-2xl font-bold text-gray-900">
+                                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="hover:text-blue-600 transition-colors">
+                                    <?php bloginfo( 'name' ); ?>
+                                </a>
+                            </h1>
+                            <?php
+                            $description = get_bloginfo( 'description', 'display' );
+                            if ( $description || is_customize_preview() ) :
+                                ?>
+                                <p class="site-description text-sm text-gray-600 mt-1"><?php echo $description; ?></p>
+                            <?php endif;
+                        endif;
+                        ?>
+                    </div>
+    
+                    <nav id="site-navigation" class="main-navigation hidden md:block">
+                        <?php
+                        wp_nav_menu( array(
+                            'theme_location' => 'primary',
+                            'menu_id'        => 'primary-menu',
+                            'container'      => false,
+                            'fallback_cb'    => false,
+                            'menu_class'     => 'flex space-x-8 items-center'
+                        ) );
+                        ?>
+                    </nav>
+    
+                    <!-- Mobile menu button -->
+                    <button @click="toggle()" :aria-expanded="open" class="hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
                 </div>
-
-                <nav id="site-navigation" class="main-navigation hidden md:block">
+    
+                <!-- Mobile menu -->
+                <nav x-show="open" x-transition class="md:hidden mt-4 pb-4">
                     <?php
                     wp_nav_menu( array(
                         'theme_location' => 'primary',
-                        'menu_id'        => 'primary-menu',
+                        'menu_id'        => 'mobile-menu',
                         'container'      => false,
                         'fallback_cb'    => false,
-                        'menu_class'     => 'flex space-x-8 items-center'
+                        'menu_class'     => 'space-y-2 pt-4'
                     ) );
                     ?>
                 </nav>
-
-                <!-- Mobile menu button -->
-                <button @click="toggle()" :aria-expanded="open" class="hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
             </div>
-
-            <!-- Mobile menu -->
-            <nav x-show="open" x-transition class="md:hidden mt-4 pb-4">
-                <?php
-                wp_nav_menu( array(
-                    'theme_location' => 'primary',
-                    'menu_id'        => 'mobile-menu',
-                    'container'      => false,
-                    'fallback_cb'    => false,
-                    'menu_class'     => 'space-y-2 pt-4'
-                ) );
-                ?>
-            </nav>
         </div>
     </header>
 

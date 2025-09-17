@@ -10,7 +10,7 @@ $footer_content = get_field('footer_content', 'option');
 
     </div><?php // #content - opened in header.php ?>
 
-    <footer id="colophon" class="site-footer container bg-white flex flex-col lg:flex-row gap-12 lg:gap-[8.875rem]">
+    <footer id="colophon" class="site-footer container bg-white flex flex-col lg:flex-row gap-12 lg:gap-[8.875rem] pb-[5.375rem]">
         <div class="footer-content lg:basis-[50%]">
             <?php echo $footer_content; ?>
         </div>
