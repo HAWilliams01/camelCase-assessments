@@ -159,6 +159,7 @@ export function registerComponents(Alpine) {
                     isCurrentMonth: date.month() === this.currentMonth,
                     isToday: date.isSame(dayjs(), 'day'),
                     isSelected: dateString === this.selectedDate,
+                    isWeekend: date.day() === 0 || date.day() === 6, // Sunday = 0, Saturday = 6
                 });
             }
         },

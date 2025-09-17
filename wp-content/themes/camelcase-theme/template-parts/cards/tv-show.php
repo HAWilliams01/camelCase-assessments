@@ -26,7 +26,7 @@ if (!$show) {
         </div>
     <?php endif; ?>
 
-    <div class="">
+    <div>
         <h4><?php echo esc_html($show['name']); ?></h4>
 
         <?php if (!empty($show['genres'])): ?>
