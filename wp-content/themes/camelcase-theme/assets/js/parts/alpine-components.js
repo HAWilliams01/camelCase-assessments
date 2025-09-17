@@ -122,23 +122,23 @@ export function registerComponents(Alpine) {
 
         selectCountry(countryCode) {
             this.selectedCountry = countryCode;
-            this.open = false;
+            this.countryOpen = false;
             // Update hidden input and submit form
             document.getElementById("country").value = countryCode;
             document.getElementById("tv-shows-form").submit();
         },
 
         toggle() {
-            if (this.open) {
+            if (this.countryOpen) {
                 return this.close();
             }
             this.$refs.button.focus();
-            this.open = true;
+            this.countryOpen = true;
         },
 
         close(focusAfter) {
-            if (!this.open) return;
-            this.open = false;
+            if (!this.countryOpen) return;
+            this.countryOpen = false;
             focusAfter && focusAfter.focus();
         },
 

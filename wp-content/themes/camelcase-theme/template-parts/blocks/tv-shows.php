@@ -156,16 +156,16 @@ $shows = $tv_shows_api->getRecentShows(6, $date, $country);
                          </svg>
                      </button>
 
-                     <!-- Panel -->
-                     <div
-                         x-ref="panel"
-                         x-show="open"
-                         x-transition.origin.top.left
-                         x-on:click.outside="close($refs.button)"
-                         :id="$id('dropdown-button')"
-                         x-cloak
-                         class="absolute left-0 min-w-48 rounded-lg shadow-sm mt-2 z-10 origin-top-left bg-white p-1.5 outline-none border border-gray-200"
-                     >
+                           <!-- Panel -->
+                           <div
+                               x-ref="panel"
+                               x-show="countryOpen"
+                               x-transition.origin.top.left
+                               x-on:click.outside="close($refs.button)"
+                               :id="$id('dropdown-button')"
+                               x-cloak
+                               class="absolute left-0 min-w-48 rounded-lg shadow-sm mt-2 z-10 origin-top-left bg-white p-1.5 outline-none border border-gray-200"
+                           >
                          <template x-for="country in countries" :key="country.code">
                              <button
                                  type="button"
