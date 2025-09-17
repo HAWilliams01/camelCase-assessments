@@ -14,7 +14,7 @@ if (!$show) {
 }
 ?>
 
-<div class="tv-show-card bg-white">
+<div class="bg-white">
     <?php if ($show['image']): ?>
         <div class="mb-6">
             <img 

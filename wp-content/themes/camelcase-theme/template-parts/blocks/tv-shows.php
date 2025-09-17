@@ -28,22 +28,108 @@ $shows = $tv_shows_api->getRecentShows(6, $date, $country);
 
 <div class="block-tv-shows">
     <div class="container">
-        <form method="GET" id="tv-shows-form" class="flex flex-wrap gap-4 items-end" x-data="tvShowsForm('<?php echo esc_js($country); ?>')" x-init="selectedCountry = '<?php echo esc_js($country); ?>'">
+        <form method="GET" id="tv-shows-form" class="flex flex-wrap gap-4 items-end" x-data="tvShowsForm('<?php echo esc_js($country); ?>', '<?php echo esc_js($date); ?>')" x-init="selectedCountry = '<?php echo esc_js($country); ?>'; selectedDate = '<?php echo esc_js($date); ?>'">
             <div class="flex flex-col">
-                <label for="date" class="text-sm font-medium text-gray-700 mb-1">Date</label>
-                <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    value="<?php echo esc_attr($date); ?>"
-                    class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    onchange="document.getElementById('tv-shows-form').submit()">
+                <div
+                    x-on:keydown.escape.prevent.stop="closeDate()"
+                    x-on:focusin.window="! $refs.datePanel.contains($event.target) && closeDate()"
+                    x-id="['date-picker']"
+                    class="relative max-w-sm"
+                >
+                    <!-- Hidden input for form submission -->
+                    <input type="hidden" id="date" name="date" x-model="selectedDate">
+                    
+                    <!-- Date Picker Button -->
+                    <button
+                        x-ref="dateButton"
+                        x-on:click="toggleDate()"
+                        :aria-expanded="dateOpen"
+                        :aria-controls="$id('date-picker')"
+                        type="button"
+                        class="relative flex items-center justify-between w-full px-3 py-2 text-left border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span x-text="formattedDate"></span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 text-gray-500">
+                            <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <!-- Date Picker Panel -->
+                    <div
+                        x-ref="datePanel"
+                        x-show="dateOpen"
+                        x-transition.origin.top.left
+                        x-on:click.outside="closeDate()"
+                        :id="$id('date-picker')"
+                        x-cloak
+                        class="absolute left-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+                    >
+                        <!-- Header -->
+                        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                            <button
+                                type="button"
+                                x-on:click="previousMonth()"
+                                class="p-1 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </button>
+                            
+                            <h3 class="text-lg font-semibold text-gray-900" x-text="monthNames[currentMonth] + ' ' + currentYear"></h3>
+                            
+                            <button
+                                type="button"
+                                x-on:click="nextMonth()"
+                                class="p-1 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Days of Week -->
+                        <div class="grid grid-cols-7 gap-1 p-2">
+                            <div class="text-center text-sm font-medium text-gray-500 py-2">Sun</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-2">Mon</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-2">Tue</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-2">Wed</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-2">Thu</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-2">Fri</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-2">Sat</div>
+                        </div>
+
+                        <!-- Calendar Grid -->
+                        <div class="grid grid-cols-7 gap-1 p-2">
+                            <template x-for="day in days" :key="day.date">
+                                <button
+                                    type="button"
+                                    x-on:click="selectDate(day.date)"
+                                    :class="{
+                                        'bg-blue-600 text-white': day.isSelected,
+                                        'text-gray-900 hover:bg-gray-100': !day.isSelected && day.isCurrentMonth,
+                                        'text-gray-400': !day.isCurrentMonth,
+                                        'font-semibold': day.isToday && !day.isSelected
+                                    }"
+                                    class="w-10 h-10 text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                    <span x-text="day.day"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <h2 class="mb-6"><?php echo $headline; ?></h2>
             
              <div class="flex flex-col">
-                 <label class="text-sm font-medium text-gray-700 mb-1">Country</label>
                  <div
                      x-on:keydown.escape.prevent.stop="close($refs.button)"
                      x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
@@ -57,7 +143,7 @@ $shows = $tv_shows_api->getRecentShows(6, $date, $country);
                      <button
                          x-ref="button"
                          x-on:click="toggle()"
-                         :aria-expanded="open"
+                         :aria-expanded="countryOpen"
                          :aria-controls="$id('dropdown-button')"
                          type="button"
                          class="relative flex items-center whitespace-nowrap justify-between gap-2 py-2 px-3 rounded-md shadow-sm bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[200px]"
