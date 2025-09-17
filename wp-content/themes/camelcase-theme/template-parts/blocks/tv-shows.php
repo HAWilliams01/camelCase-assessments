@@ -173,12 +173,14 @@ $shows = $tv_shows_api->getRecentShows(6, $date, $country);
     <div class="container">
         <?php if ($shows && !empty($shows)): ?>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <?php foreach ($shows as $show): ?>
-                    <?php
-                    // Set up the tv show data for the card
-                    set_query_var('tv_show_data', $show);
-                    get_template_part('template-parts/cards/tv-show');
-                    ?>
+                <?php foreach ($shows as $index => $show): ?>
+                    <div class="<?php echo $index >= 4 ? 'hidden md:block' : ''; ?>">
+                        <?php
+                        // Set up the tv show data for the card
+                        set_query_var('tv_show_data', $show);
+                        get_template_part('template-parts/cards/tv-show');
+                        ?>
+                    </div>
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
