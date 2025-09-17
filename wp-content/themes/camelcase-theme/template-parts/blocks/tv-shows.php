@@ -19,7 +19,7 @@ require_once get_template_directory() . '/inc/tv-shows-api.php';
 $tv_shows_api = getTVShows();
 
 // Fetch the 6 most recent TV shows
-$shows = $tv_shows_api->getRecentShows(6);
+$shows = $tv_shows_api->getRecentShows(6, $date, $country);
 ?>
 
 <div class="block-tv-shows">
@@ -32,8 +32,7 @@ $shows = $tv_shows_api->getRecentShows(6);
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <?php foreach ($shows as $show): ?>
                     <?php
-                    // Set up the tv show data for the card
-                    set_query_var('tv_show_data', $show);
+                    // Set up the tv show data for the card                    set_query_var('tv_show_data', $show);
                     get_template_part('template-parts/cards/tv-show');
                     ?>
                 <?php endforeach; ?>

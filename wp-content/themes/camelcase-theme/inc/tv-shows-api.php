@@ -13,12 +13,31 @@ class TV_Shows_API {
     private $cache_duration = 24 * 60 * 60; // 24 hours in seconds
     
     /**
-     * Get the 6 most recent TV shows for today
+     * Get the most recent TV shows for a specific date and country
      *
+     * @param int $limit Number of shows to return
+     * @param string $date Date in Y-m-d format
+     * @param string $country Country code (US, CA, GB, etc.)
      * @return array|false Array of TV shows or false on error
      */
-    public function getRecentShows($limit = 6) {
-        $cache_key = 'tv_shows_recent_' . date('Y-m-d');
+    public function getRecentShows($limit = 6, $date = null, $country = 'US') {
+        // Use current date if not provided
+        if ($date === null) {
+            $date = date('Y-m-d');
+        }
+        
+        // Validate date format
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            $date = date('Y-m-d');
+        }
+        
+        // Validate country code
+        $valid_countries = ['US', 'CA', 'GB', 'AU', 'DE', 'FR', 'JP', 'KR'];
+        if (!in_array($country, $valid_countries)) {
+            $country = 'US';
+        }
+        
+        $cache_key = 'tv_shows_recent_' . $date . '_' . $country;
         $cached_data = get_transient($cache_key);
         
         // Return cached data if available
@@ -27,7 +46,7 @@ class TV_Shows_API {
         }
         
         // Fetch fresh data from API
-        $shows = $this->fetchShows();
+        $shows = $this->fetchShows($date, $country);
         
         if ($shows === false) {
             return false;
@@ -40,13 +59,14 @@ class TV_Shows_API {
     }
     
     /**
-     * Fetch today's TV shows from API
+     * Fetch TV shows from API for a specific date and country
      *
+     * @param string $date Date in Y-m-d format
+     * @param string $country Country code
      * @return array|false Array of shows or false on error
      */
-    private function fetchShows() {
-        $today = date('Y-m-d');
-        $url = $this->api_base_url . '/schedule/web?date=' . $today . '&country=US';
+    private function fetchShows($date, $country) {
+        $url = $this->api_base_url . '/schedule/web?date=' . $date . '&country=' . $country;
         
         $response = wp_remote_get($url, array(
             'timeout' => 30,
