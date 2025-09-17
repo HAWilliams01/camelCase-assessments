@@ -18,10 +18,10 @@ $footer_content = get_field('footer_content', 'option');
         <div class="footer-newsletter lg:basis-[50%]">
             <form action="" method="post" class="flex flex-col">
                 <label class="mb-3">
-                    <input class="px-6 py-4 bg-gray-100 w-full" type="text" name="name" placeholder="Name" required>
+                    <input class="px-6 py-4 bg-gray-100 w-full focus:outline-none focus:ring-2 focus:ring-primary-500" type="text" name="name" placeholder="Name" required>
                 </label>
                 <label>
-                    <input class="px-6 py-4 bg-gray-100 w-full" type="email" name="email" placeholder="Email" required>
+                    <input class="px-6 py-4 bg-gray-100 w-full focus:outline-none focus:ring-2 focus:ring-primary-500" type="email" name="email" placeholder="Email" required>
                 </label>
                 <div>
                     <button type="submit" class="btn mt-6">Submit</button>
