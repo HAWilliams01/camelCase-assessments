@@ -28,13 +28,13 @@ $shows = $tv_shows_api->getRecentShows(6, $date, $country);
 
 <div class="block-tv-shows">
     <div class="container">
-        <form method="GET" id="tv-shows-form" class="flex flex-wrap gap-[2.625rem] justify-between items-center" x-data="tvShowsForm('<?php echo esc_js($country); ?>', '<?php echo esc_js($date); ?>')" x-init="selectedCountry = '<?php echo esc_js($country); ?>'; selectedDate = '<?php echo esc_js($date); ?>'">
-            <div class="flex flex-col">
+        <form method="GET" id="tv-shows-form" class="flex flex-col lg:flex-row gap-[2.625rem] justify-between items-center" x-data="tvShowsForm('<?php echo esc_js($country); ?>', '<?php echo esc_js($date); ?>')" x-init="selectedCountry = '<?php echo esc_js($country); ?>'; selectedDate = '<?php echo esc_js($date); ?>'">
+            <div class="flex flex-col order-3 lg:order-1 w-full lg:w-auto">
                 <div
                     x-on:keydown.escape.prevent.stop="closeDate()"
                     x-on:focusin.window="! $refs.datePanel.contains($event.target) && closeDate()"
                     x-id="['date-picker']"
-                    class="relative max-w-sm">
+                    class="relative">
                     <!-- Hidden input for form submission -->
                     <input type="hidden" id="date" name="date" x-model="selectedDate">
 
@@ -116,9 +116,9 @@ $shows = $tv_shows_api->getRecentShows(6, $date, $country);
                 </div>
             </div>
 
-            <h2><?php echo $headline; ?></h2>
+            <h2 class="order-1 lg:order-2 text-center"><?php echo $headline; ?></h2>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col order-3 w-full lg:w-auto">
                 <div
                     x-on:keydown.escape.prevent.stop="close($refs.button)"
                     x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
@@ -134,7 +134,7 @@ $shows = $tv_shows_api->getRecentShows(6, $date, $country);
                         :aria-expanded="countryOpen"
                         :aria-controls="$id('dropdown-button')"
                         type="button"
-                        class="relative flex items-center whitespace-nowrap justify-between min-w-56 gap-2 px-5 py-2.5 bg-gray-100 border-b border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        class="relative flex items-center whitespace-nowrap justify-between w-full min-w-56 gap-2 px-5 py-2.5 bg-gray-100 border-b border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
 
                         <div class="flex flex-col items-start w-full">
                             <span class="text-sm text-green-500 leading-6">Country</span>

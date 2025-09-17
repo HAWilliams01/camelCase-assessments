@@ -14,15 +14,14 @@ if (!$show) {
 }
 ?>
 
-<div class="bg-white">
+<div class="bg-white text-center md:text-left">
     <?php if ($show['image']): ?>
         <div class="mb-6">
-            <img 
-                src="<?php echo esc_url($show['image']); ?>" 
+            <img
+                src="<?php echo esc_url($show['image']); ?>"
                 alt="<?php echo esc_attr($show['name']); ?>"
                 class="w-full h-[24.625rem] object-contain"
-                loading="lazy"
-            >
+                loading="lazy">
         </div>
     <?php endif; ?>
 
@@ -30,7 +29,7 @@ if (!$show) {
         <h4><?php echo esc_html($show['name']); ?></h4>
 
         <?php if (!empty($show['genres'])): ?>
-            <div class="flex flex-wrap gap-1">
+            <div class="flex flex-wrap gap-1 justify-center md:justify-start">
                 <?php foreach (array_slice($show['genres'], 0, 3) as $genre): ?>
                     <span class="text-[1.0625rem]">
                         <?php echo esc_html($genre); ?>
