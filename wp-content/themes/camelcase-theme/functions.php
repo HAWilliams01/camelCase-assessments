@@ -97,6 +97,11 @@ require_once get_template_directory() . '/inc/vite.php';
 require_once get_template_directory() . '/inc/acf.php';
 
 /**
+ * Load TV Shows API service
+ */
+require_once get_template_directory() . '/inc/tv-shows-api.php';
+
+/**
  * Enqueue scripts and styles using Vite integration.
  */
 function camelcase_scripts() {

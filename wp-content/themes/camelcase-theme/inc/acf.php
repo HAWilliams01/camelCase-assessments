@@ -129,7 +129,7 @@ function camelcase_acf_init_block_types() {
         'description'       => __('', 'camelcase-theme'),
         'render_template'   => get_template_directory() . '/template-parts/blocks/tv-shows.php',
         'category'          => 'formatting',
-        'icon'              => 'dashicons-tv-alt',
+        'icon'              => 'admin-comments',
         'keywords'          => array('tv', 'shows'),
     ));
 }
