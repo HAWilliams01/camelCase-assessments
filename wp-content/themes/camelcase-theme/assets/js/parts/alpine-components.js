@@ -122,23 +122,23 @@ export function registerComponents(Alpine) {
 
         selectCountry(countryCode) {
             this.selectedCountry = countryCode;
-            this.open = false;
+            this.countryOpen = false;
             // Update hidden input and submit form
             document.getElementById("country").value = countryCode;
             document.getElementById("tv-shows-form").submit();
         },
 
         toggle() {
-            if (this.open) {
+            if (this.countryOpen) {
                 return this.close();
             }
             this.$refs.button.focus();
-            this.open = true;
+            this.countryOpen = true;
         },
 
         close(focusAfter) {
-            if (!this.open) return;
-            this.open = false;
+            if (!this.countryOpen) return;
+            this.countryOpen = false;
             focusAfter && focusAfter.focus();
         },
 
@@ -217,90 +217,6 @@ export function registerComponents(Alpine) {
                 block: "start",
             });
         },
-    }));
-
-    // Custom Date Picker Component
-    Alpine.data('customDatePicker', (initialDate = null) => ({
-        open: false,
-        selectedDate: initialDate || new Date().toISOString().split('T')[0],
-        currentMonth: new Date().getMonth(),
-        currentYear: new Date().getFullYear(),
-        days: [],
-        monthNames: [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ],
-
-        init() {
-            this.generateCalendar();
-        },
-
-        generateCalendar() {
-            const firstDay = new Date(this.currentYear, this.currentMonth, 1);
-            const lastDay = new Date(this.currentYear, this.currentMonth + 1, 0);
-            const startDate = new Date(firstDay);
-            startDate.setDate(startDate.getDate() - firstDay.getDay());
-
-            this.days = [];
-            for (let i = 0; i < 42; i++) {
-                const date = new Date(startDate);
-                date.setDate(startDate.getDate() + i);
-                
-                this.days.push({
-                    date: date.toISOString().split('T')[0],
-                    day: date.getDate(),
-                    isCurrentMonth: date.getMonth() === this.currentMonth,
-                    isToday: date.toDateString() === new Date().toDateString(),
-                    isSelected: date.toISOString().split('T')[0] === this.selectedDate
-                });
-            }
-        },
-
-        selectDate(date) {
-            this.selectedDate = date;
-            this.open = false;
-            // Update hidden input and submit form
-            document.getElementById('date').value = date;
-            document.getElementById('tv-shows-form').submit();
-        },
-
-        previousMonth() {
-            if (this.currentMonth === 0) {
-                this.currentMonth = 11;
-                this.currentYear--;
-            } else {
-                this.currentMonth--;
-            }
-            this.generateCalendar();
-        },
-
-        nextMonth() {
-            if (this.currentMonth === 11) {
-                this.currentMonth = 0;
-                this.currentYear++;
-            } else {
-                this.currentMonth++;
-            }
-            this.generateCalendar();
-        },
-
-        toggle() {
-            this.open = !this.open;
-        },
-
-        close() {
-            this.open = false;
-        },
-
-        get formattedDate() {
-            if (!this.selectedDate) return 'Select Date';
-            const date = new Date(this.selectedDate);
-            return date.toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric' 
-            });
-        }
     }));
 
     console.log('Camelcase Theme loaded');
