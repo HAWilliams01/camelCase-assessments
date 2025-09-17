@@ -66,9 +66,9 @@ export function registerComponents(Alpine) {
 
         // Date picker state
         dateOpen: false,
-        selectedDate: initialDate || new Date().toISOString().split("T")[0],
-        currentMonth: new Date().getMonth(),
-        currentYear: new Date().getFullYear(),
+        selectedDate: initialDate || dayjs().format('YYYY-MM-DD'),
+        currentMonth: initialDate ? dayjs(initialDate).month() : dayjs().month(),
+        currentYear: initialDate ? dayjs(initialDate).year() : dayjs().year(),
         days: [],
         monthNames: [
             "January",
@@ -144,23 +144,21 @@ export function registerComponents(Alpine) {
 
         // Date picker methods
         generateCalendar() {
-            const firstDay = new Date(this.currentYear, this.currentMonth, 1);
-            const startDate = new Date(firstDay);
-            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            const firstDay = dayjs().year(this.currentYear).month(this.currentMonth).date(1);
+            const startDate = firstDay.subtract(firstDay.day(), 'day');
 
             this.days = [];
             // 5 rows of 7 days
             for (let i = 0; i < 35; i++) {
-                const date = new Date(startDate);
-                date.setDate(startDate.getDate() + i);
+                const date = startDate.add(i, 'day');
+                const dateString = date.format('YYYY-MM-DD');
 
                 this.days.push({
-                    date: date.toISOString().split("T")[0],
-                    day: date.getDate(),
-                    isCurrentMonth: date.getMonth() === this.currentMonth,
-                    isToday: date.toDateString() === new Date().toDateString(),
-                    isSelected:
-                        date.toISOString().split("T")[0] === this.selectedDate,
+                    date: dateString,
+                    day: date.date(),
+                    isCurrentMonth: date.month() === this.currentMonth,
+                    isToday: date.isSame(dayjs(), 'day'),
+                    isSelected: dateString === this.selectedDate,
                 });
             }
         },
@@ -174,22 +172,18 @@ export function registerComponents(Alpine) {
         },
 
         previousMonth() {
-            if (this.currentMonth === 0) {
-                this.currentMonth = 11;
-                this.currentYear--;
-            } else {
-                this.currentMonth--;
-            }
+            const currentDate = dayjs().year(this.currentYear).month(this.currentMonth);
+            const prevDate = currentDate.subtract(1, 'month');
+            this.currentMonth = prevDate.month();
+            this.currentYear = prevDate.year();
             this.generateCalendar();
         },
 
         nextMonth() {
-            if (this.currentMonth === 11) {
-                this.currentMonth = 0;
-                this.currentYear++;
-            } else {
-                this.currentMonth++;
-            }
+            const currentDate = dayjs().year(this.currentYear).month(this.currentMonth);
+            const nextDate = currentDate.add(1, 'month');
+            this.currentMonth = nextDate.month();
+            this.currentYear = nextDate.year();
             this.generateCalendar();
         },
 
@@ -203,12 +197,7 @@ export function registerComponents(Alpine) {
 
         get formattedDate() {
             if (!this.selectedDate) return "Select Date";
-            const date = new Date(this.selectedDate);
-            return date.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-            });
+            return dayjs(this.selectedDate).format('MMM D, YYYY');
         },
 
         scrollToForm() {

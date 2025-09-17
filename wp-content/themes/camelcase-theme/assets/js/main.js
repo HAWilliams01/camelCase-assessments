@@ -6,14 +6,16 @@
 import '../css/main.pcss';
 
 import Alpine from 'alpinejs';
+import dayjs from 'dayjs';
 import { registerComponents } from './parts/alpine-components';
 import './parts/splide.js';
 
 // Register custom Alpine components
 registerComponents(Alpine);
 
-// Make Alpine available globally (useful for debugging)
+// Make Alpine and dayjs available globally (useful for debugging)
 window.Alpine = Alpine;
+window.dayjs = dayjs;
 
 // Start Alpine.js
 Alpine.start();
