@@ -15,7 +15,7 @@
 /* Custom styles */
 @layer base {
   body {
-    @apply text-gray-900 antialiased font-epilogue;
+    @apply text-gray-900 antialiased font-epilogue text-[1.0625rem];
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -164,8 +164,11 @@
 
 /* Footer styles */
 .site-footer {
-  @apply bg-gray-50 border-t border-gray-200 mt-12;
-
+  .footer-content {
+    h2, h3, h4, h5, h6 {
+      @apply mb-6
+    }
+  }
   .footer-widgets {
     @apply py-12 grid grid-cols-1 md:grid-cols-3 gap-8;
   }
