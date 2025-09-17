@@ -18,11 +18,13 @@ $testimonials = get_field('testimonials');
 <div class="block-testimonials container">
     <h2 class="text-center mb-[2.625rem]"><?php echo $headline; ?></h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <?php foreach ($testimonials as $testimonial): ?>
-            <?php
-            set_query_var('testimonial_data', $testimonial);
-            get_template_part('template-parts/cards/testimonial');
-            ?>
+        <?php foreach ($testimonials as $index => $testimonial): ?>
+            <div class="<?php echo $index >= 3 ? 'hidden md:block' : ''; ?>">
+                <?php
+                set_query_var('testimonial_data', $testimonial);
+                get_template_part('template-parts/cards/testimonial');
+                ?>
+            </div>
         <?php endforeach; ?>
     </div>
 </div>
