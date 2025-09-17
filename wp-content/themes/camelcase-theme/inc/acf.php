@@ -17,6 +17,10 @@ function camelcase_acf_init() {
 
     add_action( 'admin_notices', 'camelcase_check_acf_enabled' );
     add_action( 'acf/init', 'camelcase_acf_init_block_types' );
+
+    add_action('init', 'camelcase_acf_init_block_types');
+    add_action('wp_loaded', 'camelcase_acf_init_block_types');
+
     add_filter( 'acf/settings/save_json', 'camelcase_acf_settings_save_json' );
     add_filter( 'acf/settings/load_json', 'camelcase_acf_settings_load_json' );
 }
@@ -106,16 +110,36 @@ function camelcase_acf_init_block_types() {
         'icon'              => 'format-gallery',
         'keywords'          => array('image', 'slider'),
     ));
+
+    // Skills Block
+    acf_register_block_type(array(
+        'name'              => 'block_skills',
+        'title'             => __('Skills', 'camelcase-theme'),
+        'description'       => __('', 'camelcase-theme'),
+        'render_template'   => get_template_directory() . '/template-parts/blocks/skills.php',
+        'category'          => 'formatting',
+        'icon'              => 'admin-comments',
+        'keywords'          => array('skills', 'cards'),
+    ));
+    
+    // TV Shows Block
+    acf_register_block_type(array(
+        'name'              => 'block_tv_shows',
+        'title'             => __('TV Shows', 'camelcase-theme'),
+        'description'       => __('', 'camelcase-theme'),
+        'render_template'   => get_template_directory() . '/template-parts/blocks/tv-shows.php',
+        'category'          => 'formatting',
+        'icon'              => 'dashicons-tv-alt',
+        'keywords'          => array('tv', 'shows'),
+    ));
 }
 
-    // Example block registration
-    // acf_register_block_type( array(
-    //     'name'              => 'hero',
-    //     'title'             => __( 'Hero Block', 'camelcase-theme' ),
-    //     'description'       => __( 'A custom hero block.', 'camelcase-theme' ),
-    //     'render_template'   => get_template_directory() . '/template-parts/blocks/hero.php',
-    //     'category'          => 'formatting',
-    //     'icon'              => 'admin-comments',
-    //     'keywords'          => array( 'hero', 'banner' ),
-    // ) );
-}
+/**
+ * Register ACF Field Groups for Blocks
+ */
+// function camelcase_register_block_fields() {
+//     if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+//         return;
+//     }
+// }
+// add_action( 'acf/init', 'camelcase_register_block_fields' );
