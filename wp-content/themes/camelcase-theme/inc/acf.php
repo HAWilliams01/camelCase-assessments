@@ -132,6 +132,17 @@ function camelcase_acf_init_block_types() {
         'icon'              => 'admin-comments',
         'keywords'          => array('tv', 'shows'),
     ));
+    
+    // Testimonials Block
+    acf_register_block_type(array(
+        'name'              => 'block_testimonials',
+        'title'             => __('Testimonials', 'camelcase-theme'),
+        'description'       => __('', 'camelcase-theme'),
+        'render_template'   => get_template_directory() . '/template-parts/blocks/testimonials.php',
+        'category'          => 'formatting',
+        'icon'              => 'admin-comments',
+        'keywords'          => array('testimonials', 'cards'),
+    ));
 }
 
 /**
